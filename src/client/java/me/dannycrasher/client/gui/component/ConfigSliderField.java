@@ -1,8 +1,9 @@
 package me.dannycrasher.client.gui.component;
 
-import java.awt.Color;
 import java.util.Locale;
 import me.dannycrasher.client.command.ArgumentType;
+import me.dannycrasher.client.gui.theme.ClickGuiTheme;
+import me.dannycrasher.client.gui.theme.GlassRenderer;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
@@ -40,11 +41,12 @@ public class ConfigSliderField implements ConfigComponent {
 		int knobX = x + fillWidth;
 		boolean hovered = mouseX >= x && mouseX <= x + sliderWidth && mouseY >= y && mouseY <= y + height;
 
-		graphics.fill(x, y + 2, x + sliderWidth, y + height - 2, new Color(10, 12, 17, 180).getRGB());
-		graphics.fill(x + 5, trackY, x + sliderWidth - 5, trackY + trackHeight, new Color(44, 50, 63).getRGB());
-		graphics.fill(x + 5, trackY, x + Math.max(5, fillWidth), trackY + trackHeight, new Color(31, 119, 255).getRGB());
-		graphics.fill(knobX - 3, y + 3, knobX + 3, y + height - 3, (hovered || dragging ? new Color(155, 203, 255) : new Color(102, 169, 255)).getRGB());
-		graphics.fill(knobX - 1, y + 2, knobX + 1, y + height - 2, new Color(235, 246, 255).getRGB());
+		GlassRenderer.fillRounded(graphics, x, y + 2, sliderWidth, height - 4, 5, GlassRenderer.withAlpha(0xFFFFFF, 20));
+		graphics.fill(x + 5, trackY, x + sliderWidth - 5, trackY + trackHeight, GlassRenderer.withAlpha(0xFFFFFF, 35));
+		graphics.fill(x + 5, trackY, x + Math.max(5, fillWidth), trackY + trackHeight, ClickGuiTheme.accent());
+		int knobColor = hovered || dragging ? ClickGuiTheme.TEXT : ClickGuiTheme.accent();
+		graphics.fill(knobX - 3, y + 3, knobX + 3, y + height - 3, knobColor);
+		graphics.fill(knobX - 1, y + 2, knobX + 1, y + height - 2, ClickGuiTheme.TEXT);
 		input.render(graphics, font, mouseX, mouseY, partialTick);
 	}
 

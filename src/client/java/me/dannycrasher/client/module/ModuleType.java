@@ -6,6 +6,7 @@ import java.util.Objects;
 public final class ModuleType {
 	public static final ModuleType COMMAND = new ModuleType("command", "Commands");
 	public static final ModuleType CRASHER = new ModuleType("crasher", "Crashers");
+	public static final ModuleType PAPER = new ModuleType("paper", "Paper");
 	public static final ModuleType EXPLOIT = new ModuleType("exploit", "Exploits");
 	public static final ModuleType STYLE = new ModuleType("style", "Style");
 

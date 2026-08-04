@@ -1,6 +1,6 @@
 package me.dannycrasher.client.gui.component;
 
-import java.awt.Color;
+import me.dannycrasher.client.gui.theme.ClickGuiTheme;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
@@ -25,20 +25,17 @@ public class ConfigCheckbox implements ConfigComponent {
 		int boxSize = Math.min(height, 16);
 		int boxY = y + (height - boxSize) / 2;
 
-		graphics.fill(x, boxY, x + boxSize, boxY + boxSize, new Color(8, 10, 14, 235).getRGB());
-		graphics.fill(x, boxY, x + boxSize, boxY + 1, borderColor(hovered));
-		graphics.fill(x, boxY + boxSize - 1, x + boxSize, boxY + boxSize, borderColor(hovered));
-		graphics.fill(x, boxY, x + 1, boxY + boxSize, borderColor(hovered));
-		graphics.fill(x + boxSize - 1, boxY, x + boxSize, boxY + boxSize, borderColor(hovered));
+		ClickGuiTheme.renderField(graphics, x, boxY, boxSize, boxSize, focused, hovered);
 
 		if (checked) {
-			graphics.fill(x + 4, boxY + 8, x + 6, boxY + 10, new Color(155, 203, 255).getRGB());
-			graphics.fill(x + 6, boxY + 10, x + 8, boxY + 12, new Color(155, 203, 255).getRGB());
-			graphics.fill(x + 8, boxY + 6, x + 10, boxY + 10, new Color(155, 203, 255).getRGB());
-			graphics.fill(x + 10, boxY + 4, x + 12, boxY + 8, new Color(155, 203, 255).getRGB());
+			int mark = ClickGuiTheme.accent();
+			graphics.fill(x + 4, boxY + 8, x + 6, boxY + 10, mark);
+			graphics.fill(x + 6, boxY + 10, x + 8, boxY + 12, mark);
+			graphics.fill(x + 8, boxY + 6, x + 10, boxY + 10, mark);
+			graphics.fill(x + 10, boxY + 4, x + 12, boxY + 8, mark);
 		}
 
-		graphics.drawString(font, checked ? "true" : "false", x + boxSize + 7, y + 5, new Color(230, 235, 242).getRGB(), true);
+		graphics.drawString(font, checked ? "true" : "false", x + boxSize + 7, y + 5, ClickGuiTheme.TEXT, false);
 	}
 
 	@Override
@@ -99,10 +96,6 @@ public class ConfigCheckbox implements ConfigComponent {
 	@Override
 	public int getY() {
 		return y;
-	}
-
-	private int borderColor(boolean hovered) {
-		return (focused || hovered ? new Color(102, 169, 255) : new Color(48, 58, 74)).getRGB();
 	}
 
 	private boolean isInside(double mouseX, double mouseY) {

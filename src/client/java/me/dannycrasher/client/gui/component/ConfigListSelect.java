@@ -1,7 +1,8 @@
 package me.dannycrasher.client.gui.component;
 
-import java.awt.Color;
 import java.util.List;
+import me.dannycrasher.client.gui.theme.ClickGuiTheme;
+import me.dannycrasher.client.gui.theme.GlassRenderer;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
@@ -31,30 +32,46 @@ public class ConfigListSelect implements ConfigComponent {
 	@Override
 	public void render(GuiGraphics graphics, Font font, int mouseX, int mouseY, float partialTick) {
 		boolean hovered = isInside(mouseX, mouseY, x, y, width, height);
-		graphics.fill(x, y, x + width, y + height, new Color(8, 10, 14, 235).getRGB());
-		graphics.fill(x, y + height - 1, x + width, y + height, (focused || hovered ? new Color(102, 169, 255) : new Color(48, 58, 74)).getRGB());
-		graphics.drawString(font, value, x + 5, y + 5, new Color(230, 235, 242).getRGB(), true);
-		graphics.drawString(font, open ? "-" : "+", x + width - 12, y + 5, new Color(180, 210, 255).getRGB(), true);
+		ClickGuiTheme.renderField(graphics, x, y, width, height, focused || open, hovered);
+		graphics.drawString(font, value, x + 5, y + 5, ClickGuiTheme.TEXT, false);
+		graphics.drawString(font, open ? "-" : "+", x + width - 12, y + 5, ClickGuiTheme.SOFT, false);
 
 		if (!open) {
 			return;
 		}
 
-		int dropdownTop = y + height;
-		int dropdownBottom = dropdownTop + options.size() * height;
-		graphics.fill(x - 1, dropdownTop - 1, x + width + 1, dropdownBottom + 1, new Color(3, 4, 7, 245).getRGB());
-		graphics.fill(x, dropdownTop, x + width, dropdownBottom, new Color(10, 12, 17, 255).getRGB());
+		int dropdownTop = y + height + 2;
+		int dropdownHeight = options.size() * height;
+		GlassRenderer.glassPanel(
+				graphics,
+				x,
+				dropdownTop,
+				width,
+				dropdownHeight,
+				GlassRenderer.RADIUS_FIELD,
+				GlassRenderer.withAlpha(0x161820, 220),
+				GlassRenderer.withAlpha(ClickGuiTheme.accent(), 120)
+		);
 
 		for (int index = 0; index < options.size(); index++) {
-			int optionY = y + height + index * height;
+			int optionY = dropdownTop + index * height;
 			String option = options.get(index);
 			boolean optionHovered = isInside(mouseX, mouseY, x, optionY, width, height);
 			boolean selected = option.equals(value);
-			int background = selected ? new Color(25, 92, 210, 255).getRGB() : optionHovered ? new Color(30, 36, 48, 255).getRGB() : new Color(15, 18, 24, 255).getRGB();
 
-			graphics.fill(x, optionY, x + width, optionY + height, background);
-			graphics.fill(x, optionY + height - 1, x + width, optionY + height, new Color(42, 50, 64, 255).getRGB());
-			graphics.drawString(font, option, x + 5, optionY + 5, new Color(230, 235, 242).getRGB(), true);
+			if (selected || optionHovered) {
+				GlassRenderer.fillRounded(
+						graphics,
+						x + 2,
+						optionY + 1,
+						width - 4,
+						height - 2,
+						4,
+						selected ? GlassRenderer.withAlpha(ClickGuiTheme.accent(), 90) : GlassRenderer.withAlpha(0xFFFFFF, 28)
+				);
+			}
+
+			graphics.drawString(font, option, x + 5, optionY + 5, ClickGuiTheme.TEXT, false);
 		}
 	}
 
@@ -69,8 +86,9 @@ public class ConfigListSelect implements ConfigComponent {
 		}
 
 		if (open) {
+			int dropdownTop = y + height + 2;
 			for (int index = 0; index < options.size(); index++) {
-				int optionY = y + height + index * height;
+				int optionY = dropdownTop + index * height;
 
 				if (isInside(mouseX, mouseY, x, optionY, width, height)) {
 					value = options.get(index);

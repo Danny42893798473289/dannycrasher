@@ -1,6 +1,7 @@
 package me.dannycrasher.client.gui.menu;
 
 import java.awt.Color;
+import me.dannycrasher.client.gui.theme.ClickGuiTheme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,9 +18,14 @@ public class MenuTextField {
 	private boolean focused;
 	private int cursor;
 	private boolean allSelected;
+	private boolean glassStyle;
 
 	public MenuTextField(String placeholder) {
 		this.placeholder = placeholder;
+	}
+
+	public void setGlassStyle(boolean glassStyle) {
+		this.glassStyle = glassStyle;
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -31,6 +37,14 @@ public class MenuTextField {
 
 	public void render(GuiGraphics graphics, Font font, int mouseX, int mouseY) {
 		boolean hovered = isInside(mouseX, mouseY);
+		if (glassStyle) {
+			ClickGuiTheme.renderField(graphics, x, y, width, height, focused, hovered);
+			String rendered = value.isEmpty() && !focused ? placeholder : getRenderedValue();
+			int color = value.isEmpty() && !focused ? ClickGuiTheme.MUTED : ClickGuiTheme.TEXT;
+			graphics.drawString(font, rendered, x + 8, y + (height - 8) / 2, color, false);
+			return;
+		}
+
 		graphics.fill(x - 1, y - 1, x + width + 1, y + height + 1, new Color(3, 5, 9, 150).getRGB());
 		graphics.fill(x, y, x + width, y + height, new Color(10, 13, 19, 236).getRGB());
 		graphics.fill(x, y + height - 1, x + width, y + height, focused || hovered ? MenuTheme.ACCENT : new Color(48, 58, 74).getRGB());

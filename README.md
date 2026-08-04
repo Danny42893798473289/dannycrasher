@@ -35,9 +35,16 @@ It ships with a **module framework**, **custom packet pipeline**, and **recon ut
 | **Custom Data** | Crasher | Deep `custom_data` NBT trees |
 | **Bundle Contents** | Crasher | Nested `bundle_contents` item lists |
 | **Lore** | Crasher | Oversized `lore` / `item_name` text components |
+| **Creative Book** | Paper | Creative-slot writable book bomb (**requires creative**) |
+| **Creative Custom Data** | Paper | Creative-slot `custom_data` NBT bomb (**requires creative**) |
+| **Creative Bundle** | Paper | Creative-slot nested `bundle_contents` (**requires creative**) |
+| **Creative Lore** | Paper | Creative-slot lore / item_name bomb (**requires creative**) |
+| **Creative Slot Spam** | Paper | Rapid creative-slot inventory sync pressure (**requires creative**) |
 | **Bundle** | Exploit | 1.21.2+ bundle instant-crash (protocol 768/769/770) |
 
-Open **ClickGUI** with `Right Shift`. Chat command prefix defaults to `!`.
+Open **ClickGUI** with `Right Shift` (includes a **Paper** tab for creative-mode modules). Chat command prefix defaults to `!`.
+
+Paper creative modules send `SetCreativeModeSlot` packets — you must be in **creative mode on the server** for them to apply.
 
 ---
 
@@ -55,7 +62,7 @@ Open **ClickGUI** with `Right Shift`. Chat command prefix defaults to `!`.
 .minecraft/mods/
 ├── fabric-api-….jar
 ├── ViaFabricPlus-….jar
-└── DannyCrasher-1.0.0.jar
+└── DannyCrasher-1.1.0.jar
 ```
 
 Config: `.minecraft/config/dannycrasher/`

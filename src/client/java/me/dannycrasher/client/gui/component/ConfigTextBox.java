@@ -1,6 +1,6 @@
 package me.dannycrasher.client.gui.component;
 
-import java.awt.Color;
+import me.dannycrasher.client.gui.theme.ClickGuiTheme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -40,11 +40,10 @@ public class ConfigTextBox implements ConfigComponent {
 	@Override
 	public void render(GuiGraphics graphics, Font font, int mouseX, int mouseY, float partialTick) {
 		boolean hovered = isInside(mouseX, mouseY);
-		graphics.fill(x, y, x + width, y + height, new Color(8, 10, 14, 235).getRGB());
-		graphics.fill(x, y + height - 1, x + width, y + height, (focused || hovered ? new Color(102, 169, 255) : new Color(48, 58, 74)).getRGB());
+		ClickGuiTheme.renderField(graphics, x, y, width, height, focused, hovered);
 
 		String renderedValue = getRenderedValue();
-		graphics.drawString(font, renderedValue, x + 5, y + 5, new Color(230, 235, 242).getRGB(), true);
+		graphics.drawString(font, renderedValue, x + 5, y + 5, ClickGuiTheme.TEXT, false);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import me.dannycrasher.client.chat.ChatHelper;
 import me.dannycrasher.client.notify.NotificationType;
 import me.dannycrasher.client.module.impl.crash.*;
 import me.dannycrasher.client.module.impl.exploit.*;
+import me.dannycrasher.client.module.impl.paper.*;
 
 public class ModuleManager {
 	private final Map<String, Module> modules = new LinkedHashMap<>();
@@ -32,6 +33,13 @@ public class ModuleManager {
 				new CustomDataCrash(),
 				new BundleContentsCrash(),
 				new LoreCrash(),
+
+				// Paper creative modules
+				new CreativeBook(),
+				new CreativeCustomData(),
+				new CreativeBundle(),
+				new CreativeLore(),
+				new CreativeSlotSpam(),
 
 				// Exploit modules
 				new BundleExploit()
