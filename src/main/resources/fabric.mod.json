@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "dannycrasher",
+	"version": "${version}",
+	"name": "Danny Crasher",
+	"description": "Fabric crash/exploit toolkit client for authorized server security testing.",
+	"authors": [
+		"danny"
+	],
+	"contact": {
+		"sources": "https://github.com/Danny42893798473289/dannycrasher"
+	},
+	"license": "MIT",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+          "me.dannycrasher.client.DannyCrasher"
+		]
+	},
+	"mixins": [
+		"dannycrasher.client.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*",
+		"viafabricplus": "*"
+	}
+}
