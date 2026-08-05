@@ -35,7 +35,7 @@ public class WrittenBookCrash extends Module {
 		addArgument("nbtDepth", ArgumentType.INT, 1, 32, "16");
 		addArgument("map size", ArgumentType.INT, 1, 46, "46");
 		addArgument("threadSleep", ArgumentType.INT, 1, 5000, "1500");
-		addArgument("loopAmount", ArgumentType.INT, 1, 30, "15");
+		addArgument("loopAmount", ArgumentType.INT, 1, 5000, "15");
 	}
 
 	private ScheduledExecutorService executorService;

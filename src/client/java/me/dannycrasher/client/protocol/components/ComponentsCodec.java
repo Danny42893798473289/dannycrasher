@@ -101,13 +101,13 @@ public class ComponentsCodec {
 
         PacketCodec.writeVarInt(buf, hashedStack.compSize());
         for (int i = 0; i < hashedStack.compSize(); i++) {
-            PacketCodec.writeVarInt(buf, 1);
-            buf.writeInt(1);
+            PacketCodec.writeVarInt(buf, 1 + (i % 64));
+            buf.writeInt(0x7F000000 | (i * 31));
         }
 
         PacketCodec.writeVarInt(buf, hashedStack.delCompSize());
         for (int i = 0; i < hashedStack.delCompSize(); i++) {
-            PacketCodec.writeVarInt(buf, 1);
+            PacketCodec.writeVarInt(buf, 1 + (i % 64));
         }
     }
 }

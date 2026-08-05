@@ -32,7 +32,7 @@ public class BookCrash extends Module {
         addArgument("pages", ArgumentType.INT, 1, 15, "15");
         addArgument("map size", ArgumentType.INT, 1, 46, "46");
         addArgument("threadSleep", ArgumentType.INT, 1, 5000, "1500");
-        addArgument("loopAmount", ArgumentType.INT, 1, 30, "15");
+        addArgument("loopAmount", ArgumentType.INT, 1, 5000, "15");
     }
 
     private ScheduledExecutorService executorService;
